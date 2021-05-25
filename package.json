@@ -4,7 +4,7 @@
   "description": "",
   "main": "sketch.js",
   "scripts": {
-    "build": "rm -rf ./dist/* && mkdir ./dist/css && cp ./index.html ./dist/index.html && cp ./css/main.css ./dist/css/main.css"
+    "build": "rm -rf ./dist/* && mkdir ./dist/css && cp ./index.html ./dist/index.html && cp ./css/main.css ./dist/css/main.css && cp -avr ./connectivity/ ./dist/"
   },
   "repository": {
     "type": "git",
