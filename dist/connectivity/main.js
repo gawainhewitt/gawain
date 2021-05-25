@@ -38,11 +38,36 @@ function setup() {  // setup p5
     conversationsOn = loadImage("/connectivity/images/conversations_invert.png");
     makeOn = loadImage("/connectivity/images/makemusic_invert.png");
     infoOn = loadImage("/connectivity/images/info_invert.png");
+    dimensions();
+    refreshPage();
 }
 
 let perfX, perfY, perfWidth, perfHeight, convX, convY, convWidth, convHeight, makeX, makeY, makeWidth, makeHeight, infoX, infoY, infoWidth, infoHeight; //do this for all the options then use the variables for both mouseOver, dimensions and click
 
-function draw() {
+function refreshPage() {
+    dimensions();
+    imageMode(CORNER);
+    image(performances, perfX, perfY, perfWidth, perfHeight);
+    image(conversations, convX, convY, convWidth, convHeight);
+    image(make, makeX, makeY, makeWidth, makeHeight);
+    image(info, infoX, infoY, infoWidth, infoHeight);
+    image(boxOfficeImage, 0, 0, width, height);
+
+}
+
+function windowResized() {
+
+    let masterDiv = document.getElementById("container");
+    let divPos = masterDiv.getBoundingClientRect(); //The returned value is a DOMRect object which is the smallest rectangle which contains the entire element, including its padding and border-width. The left, top, right, bottom, x, y, width, and height properties describe the position and size of the overall rectangle in pixels.
+    let masterLeft = divPos.left; // distance from left of screen to left edge of bounding box
+    let masterRight = divPos.right; // distance from left of screen to the right edge of bounding box
+    cnvDimension = masterRight - masterLeft; // size of div -however in some cases this is wrong, so i am now using css !important to set the size and sca;ing - but have kept this to work out size of other elements if needed
+    resizeCanvas(cnvDimension, cnvDimension);
+    dimensions();
+    refreshPage();
+}
+
+function dimensions() {
     xPercent = width/100;
     yPercent = height/100;
 
@@ -62,42 +87,46 @@ function draw() {
     infoY = yPercent*74.08;
     infoWidth = xPercent*15.66;
     infoHeight = yPercent*18.01;
-
-    imageMode(CORNER);
-    image(performances, perfX, perfY, perfWidth, perfHeight);
-    image(conversations, convX, convY, convWidth, convHeight);
-    image(make, makeX, makeY, makeWidth, makeHeight);
-    image(info, infoX, infoY, infoWidth, infoHeight);
-    image(boxOfficeImage, 0, 0, width, height);
-
 }
-
-function windowResized() {
-    let masterDiv = document.getElementById("container");
-    let divPos = masterDiv.getBoundingClientRect(); //The returned value is a DOMRect object which is the smallest rectangle which contains the entire element, including its padding and border-width. The left, top, right, bottom, x, y, width, and height properties describe the position and size of the overall rectangle in pixels.
-    let masterLeft = divPos.left; // distance from left of screen to left edge of bounding box
-    let masterRight = divPos.right; // distance from left of screen to the right edge of bounding box
-    cnvDimension = masterRight - masterLeft; // size of div -however in some cases this is wrong, so i am now using css !important to set the size and sca;ing - but have kept this to work out size of other elements if needed
-
-    resizeCanvas(cnvDimension, cnvDimension);
-  }
 
 function handleClick() {
     //performance
     if((mouseX > perfX) && (mouseX < perfX + perfWidth) && (mouseY > perfY) && (mouseY < perfY + perfHeight)){
         console.log("click");
         performances = performancesOn;
+        refreshPage();
+        setTimeout(() => {
+            performances = performancesOff;
+            refreshPage()
+        }, 1000);
         window.location.href = "/connectivity/performance.html";
-    }
-    if((mouseX > convX) && (mouseX < convX + convWidth) && (mouseY > convY) && (mouseY < convY + convHeight)){
+    }else if((mouseX > convX) && (mouseX < convX + convWidth) && (mouseY > convY) && (mouseY < convY + convHeight)){
         console.log("click");
         conversations = conversationsOn;
+        refreshPage();
+        setTimeout(() => {
+            conversations = conversationsOff;
+            refreshPage()
+        }, 1000);
         window.location.href = "/connectivity/conversations.html";
-    }
-    if((mouseX > makeX) && (mouseX < makeX + makeWidth) && (mouseY > makeY) && (mouseY < makeY + makeHeight)){
+    }else if((mouseX > makeX) && (mouseX < makeX + makeWidth) && (mouseY > makeY) && (mouseY < makeY + makeHeight)){
         console.log("click");
         make = makeOn;
+        refreshPage();
+        setTimeout(() => {
+            make = makeOff;
+            refreshPage()
+        }, 1000);
         window.location.href = "/connectivity/make.html";
+    }else if((mouseX > infoX) && (mouseX < infoX + infoWidth) && (mouseY > infoY) && (mouseY < infoY + infoHeight)){
+        console.log("click");
+        info = infoOn;
+        refreshPage();
+        setTimeout(() => {
+            info = infoOff;
+            refreshPage()
+        }, 1000);
+        //window.location.href = "/connectivity/info.html";
     }
     return false;
 }

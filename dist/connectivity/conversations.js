@@ -28,6 +28,7 @@ var lastBuffer;
 var currentBuffer;
 var numberOfSamples = 23;
 let visualisationSize;
+let welcome = 0;
 
 
 function preload(){
@@ -76,56 +77,68 @@ function setup() {  // setup p5
 var rectangleX, rectangleY, rectangleWidth, rectangleHeight;
 
 function draw() {
-    rectangleX = width/2 - radius/2;
-    rectangleY = height/2 - radius/4;
-    rectangleWidth = radius;
-    rectangleHeight = radius/2;
-    background(backgroundColour); // background
-    //imageMode(CENTER);
-    if(interfaceState === 0){
-        noStroke();
-        fill(buttonColour);
-        //rect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
-        fill(150);
-        textAlign(CENTER, CENTER);
-        textSize(cnvDimension/20);
-        text("Loading", width/2, height/2);
-    }else if(interfaceState === 1){
-        noStroke();
-        fill(buttonColour);
-        ellipse(width/2, height/2, radius);
-    }else if(interfaceState === 2){
-        stroke(255, 0, 255);
-        strokeWeight(10);
-        let x = rectangleX;
-        let y = rectangleY + (rectangleHeight/2);
-        let startX = x;
-        let startY = y;
-        let endX;
-        let endY;
-        let visualisation = toneWaveForm.getValue();
-        for(let i = 0; i < visualisation.length-1; i++){
-            // point(x, y + (visualisation[i]*visualisationSize));
-            // x = x + rectangleWidth/visualisation.length;
+    if(welcome === 2){
+        rectangleX = width/2 - radius/2;
+        rectangleY = height/2 - radius/4;
+        rectangleWidth = radius;
+        rectangleHeight = radius/2;
+        background(backgroundColour); // background
+        //imageMode(CENTER);
+        if(interfaceState === 0){
+            noStroke();
+            fill(buttonColour);
+            //rect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+            fill(150);
+            textAlign(CENTER, CENTER);
+            textSize(cnvDimension/20);
+            text("Loading", width/2, height/2);
+        }else if(interfaceState === 1){
+            noStroke();
+            fill(buttonColour);
+            ellipse(width/2, height/2, radius);
+        }else if(interfaceState === 2){
+            stroke(255, 0, 255);
+            strokeWeight(10);
+            let x = rectangleX;
+            let y = rectangleY + (rectangleHeight/2);
+            let startX = x;
+            let startY = y;
+            let endX;
+            let endY;
+            let visualisation = toneWaveForm.getValue();
+            for(let i = 0; i < visualisation.length-1; i++){
+                // point(x, y + (visualisation[i]*visualisationSize));
+                // x = x + rectangleWidth/visualisation.length;
 
-            startY = y + (visualisation[i]*visualisationSize);
-            endX = startX + rectangleWidth/visualisation.length;
-            endY = y + (visualisation[i+1]*visualisationSize);
+                startY = y + (visualisation[i]*visualisationSize);
+                endX = startX + rectangleWidth/visualisation.length;
+                endY = y + (visualisation[i+1]*visualisationSize);
 
-            line(startX, startY, endX, endY);
+                line(startX, startY, endX, endY);
 
-            startX = startX + rectangleWidth/visualisation.length;
+                startX = startX + rectangleWidth/visualisation.length;
+            }
+            //text("Audio Visualisation", width/2, height/2);
+            //console.log(toneWaveForm.getValue());
+        }else if(interfaceState === 3){
+            noStroke();
+            fill(buttonColour);
+            rect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+            fill(150);
+            textAlign(CENTER, CENTER);
+            textSize(cnvDimension/30);
+            text("Network Problems, click to try again", rectangleX, rectangleY, rectangleWidth, rectangleHeight);// same dimensions as the rectangle above
         }
-        //text("Audio Visualisation", width/2, height/2);
-        //console.log(toneWaveForm.getValue());
-    }else if(interfaceState === 3){
-        noStroke();
-        fill(buttonColour);
-        rect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
-        fill(150);
-        textAlign(CENTER, CENTER);
+    }else if(welcome === 0){
+        background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
         textSize(cnvDimension/30);
-        text("Network Problems, click to try again", rectangleX, rectangleY, rectangleWidth, rectangleHeight);// same dimensions as the rectangle above
+        textAlign(CENTER, CENTER);
+        text("Gawain Hewitt and Troupe asked the public to respond to a series of questions about music within the context of the pandemic of 2020/21. In this installation you can hear the responses.", width/10, height/10, (width/10) * 8, (height/10) * 8);
+    }else if(welcome === 1){
+        background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
+        textSize(cnvDimension/30);
+        textAlign(CENTER, CENTER);
+        text("Touch or click mouse to start. Click the button to play a randomly selected file. Click the back button on your browser to return to the Box Office.", width/10, height/10, (width/10) * 8, (height/10) * 8);
     }
 }
 
@@ -143,16 +156,20 @@ function setRadius() {
 }
 
 function handleClick() {
-    if(interfaceState === 1){
-        let d = dist(mouseX, mouseY, width/2, height/2);
-        if (d < radius/2) {
-            buttonPressed();
-            buttonState = true;
+    if(welcome === 2){
+        if(interfaceState === 1){
+            let d = dist(mouseX, mouseY, width/2, height/2);
+            if (d < radius/2) {
+                buttonPressed();
+                buttonState = true;
+            }
+        }else if(interfaceState === 3){
+                console.log("network click");
+                interfaceState = 0;
+                assignSoundToPlayer();
         }
-    }else if(interfaceState === 3){
-            console.log("network click");
-            interfaceState = 0;
-            assignSoundToPlayer();
+    }else{
+        welcome = welcome +1;
     }
 }
 

@@ -34,6 +34,7 @@ let visualisationSize;
 let hallImage;
 let imageLoaded = false;
 let playbuttonPosition;
+let welcome = 0;
 
 
 function preload(){
@@ -86,93 +87,105 @@ function setup() {  // setup p5
 var rectangleX, rectangleY, rectangleWidth, rectangleHeight;
 
 function draw() {
-    rectangleX = width/2 - radius/2;
-    rectangleY = ((height/11)*7.5);
-    rectangleWidth = width/10*8;
-    rectangleHeight = height/7;
-    playbuttonPosition.x = width/2;
-    playbuttonPosition.y = height/9;
-    let picWidth = width/2.5;
-    let picHeight = picWidth/1.5;
-    let picX = width/2;
-    let picY = (height/6) * 4.73;
-    let visWidth = width/2.26;
-    let x = (width/2) - visWidth/2;
-    let y = (height/12) * 7.68;
-    background(backgroundColour); // background
-    imageMode(CORNER);
-    image(hallImage, (width/20), (height/5), (width/20)*18, (height/5)*4);
-    textSize(cnvDimension/15);
-    fill(0);
-    noStroke();
-    text("Back to Box Office", width/2, height/20*19.4);
+    if (welcome == 2){
+        rectangleX = width/2 - radius/2;
+        rectangleY = ((height/11)*7.5);
+        rectangleWidth = width/10*8;
+        rectangleHeight = height/7;
+        playbuttonPosition.x = width/2;
+        playbuttonPosition.y = height/9;
+        let picWidth = width/2.5;
+        let picHeight = picWidth/1.5;
+        let picX = width/2;
+        let picY = (height/6) * 4.73;
+        let visWidth = width/2.26;
+        let x = (width/2) - visWidth/2;
+        let y = (height/12) * 7.68;
+        background(backgroundColour); // background
+        imageMode(CORNER);
+        image(hallImage, (width/20), (height/5), (width/20)*18, (height/5)*4);
+        textSize(cnvDimension/15);
+        fill(0);
+        noStroke();
+        text("Back to Box Office", width/2, height/20*19.4);
 
-    //imageMode(CENTER);
-    if((interfaceState === 0)||(imageLoaded === false)){
-        stroke(0); //colour
-        strokeWeight(4);
-        fill(playOffColour);
-        //ellipse(playbuttonPosition.x, playbuttonPosition.y, radius/1.8);
-        rectMode(CENTER);
-        rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        noStroke();
-        text("Loading", playbuttonPosition.x, playbuttonPosition.y);
-        stroke('#f2fa04'); //colour
-        strokeWeight(10);
-        line(x, y, x + visWidth, y);
-    }else if(interfaceState === 1){
-        stroke(0); //colour
-        strokeWeight(4);
-        fill(playButtonColour);
-        //ellipse(playbuttonPosition.x, playbuttonPosition.y, radius/1.8);
-        rectMode(CENTER);
-        rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        noStroke();
-        text("Click To Play", playbuttonPosition.x, playbuttonPosition.y);
-        imageMode(CENTER);
-        image(imageToShow, picX, picY, picWidth, picHeight);
-        stroke('#f2fa04'); //colour
-        strokeWeight(10);
-        line(x, y, x + visWidth, y);
-    }else if(interfaceState === 2){
-        stroke('#f2fa04'); //colour
-        strokeWeight(10);
-        imageMode(CENTER);
-        image(imageToShow, picX, picY, picWidth, picHeight);
-        let startX = x;
-        let startY = y;
-        let endX;
-        let endY;
-        let visualisation = toneWaveForm.getValue();
-        for(let i = 0; i < visualisation.length-1; i++){
-            startY = y + (visualisation[i]*visualisationSize);
-            endX = startX + visWidth/visualisation.length;
-            endY = y + (visualisation[i+1]*visualisationSize);
-            line(startX, startY, endX, endY);
-            startX = startX+(visWidth/visualisation.length);
+        //imageMode(CENTER);
+        if((interfaceState === 0)||(imageLoaded === false)){
+            stroke(0); //colour
+            strokeWeight(4);
+            fill(playOffColour);
+            //ellipse(playbuttonPosition.x, playbuttonPosition.y, radius/1.8);
+            rectMode(CENTER);
+            rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
+            fill(0);
+            textAlign(CENTER, CENTER);
+            noStroke();
+            text("Loading", playbuttonPosition.x, playbuttonPosition.y);
+            stroke('#f2fa04'); //colour
+            strokeWeight(10);
+            line(x, y, x + visWidth, y);
+        }else if(interfaceState === 1){
+            stroke(0); //colour
+            strokeWeight(4);
+            fill(playButtonColour);
+            //ellipse(playbuttonPosition.x, playbuttonPosition.y, radius/1.8);
+            rectMode(CENTER);
+            rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
+            fill(0);
+            textAlign(CENTER, CENTER);
+            noStroke();
+            text("Click To Play", playbuttonPosition.x, playbuttonPosition.y);
+            imageMode(CENTER);
+            image(imageToShow, picX, picY, picWidth, picHeight);
+            stroke('#f2fa04'); //colour
+            strokeWeight(10);
+            line(x, y, x + visWidth, y);
+        }else if(interfaceState === 2){
+            stroke('#f2fa04'); //colour
+            strokeWeight(10);
+            imageMode(CENTER);
+            image(imageToShow, picX, picY, picWidth, picHeight);
+            let startX = x;
+            let startY = y;
+            let endX;
+            let endY;
+            let visualisation = toneWaveForm.getValue();
+            for(let i = 0; i < visualisation.length-1; i++){
+                startY = y + (visualisation[i]*visualisationSize);
+                endX = startX + visWidth/visualisation.length;
+                endY = y + (visualisation[i+1]*visualisationSize);
+                line(startX, startY, endX, endY);
+                startX = startX+(visWidth/visualisation.length);
+            }
+            stroke(0); //colour
+            strokeWeight(4);
+            fill(playButtonColour);
+            rectMode(CENTER);
+            rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
+            fill(0);
+            textAlign(CENTER, CENTER);
+            noStroke();
+            text("Click To Load Next Song", playbuttonPosition.x, playbuttonPosition.y);
+        }else if(interfaceState === 3){
+            noStroke();
+            fill('rgb(255,0,0)');
+            //ellipse(playbuttonPosition.x, playbuttonPosition.y, radius/1.8);
+            rectMode(CENTER);
+            rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
+            fill(0);
+            textAlign(CENTER, CENTER);
+            text("Error. Click to reload", playbuttonPosition.x, playbuttonPosition.y);
         }
-        stroke(0); //colour
-        strokeWeight(4);
-        fill(playButtonColour);
-        rectMode(CENTER);
-        rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
-        fill(0);
+    }else if(welcome === 0){
+        background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
+        textSize(cnvDimension/20);
         textAlign(CENTER, CENTER);
-        noStroke();
-        text("Click To Load Next Song", playbuttonPosition.x, playbuttonPosition.y);
-    }else if(interfaceState === 3){
-        noStroke();
-        fill('rgb(255,0,0)');
-        //ellipse(playbuttonPosition.x, playbuttonPosition.y, radius/1.8);
-        rectMode(CENTER);
-        rect(playbuttonPosition.x, playbuttonPosition.y, rectangleWidth, rectangleHeight);
-        fill(0);
+        text("In this installation music made on learning and outreach projects run by Wigmore Hall are performed on an imagined Wigmore Hall Stage. The images used to represent the pieces are a mixture of pictures made by participants, stills from online music sessions and photos used in workshops.", width/10, height/10, (width/10) * 8, (height/10) * 8);
+    }else if(welcome === 1){
+        background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
+        textSize(cnvDimension/20);
         textAlign(CENTER, CENTER);
-        text("Error. Click to reload", playbuttonPosition.x, playbuttonPosition.y);
+        text("Touch or click mouse to start. Click on the top bar to play a track. Click again to load the next track. Click on the bottom of the stage to return to the Box Office.", width/10, height/10, (width/10) * 8, (height/10) * 8);
     }
 }
 
@@ -197,33 +210,37 @@ function setRadius() {
 }
 
 function handleClick() {
-    if(interfaceState === 1){
-        // let d = dist(mouseX, mouseY, playbuttonPosition.x, playbuttonPosition.y);
-        // if (d < radius/2) {
-        let clickX = playbuttonPosition.x - rectangleWidth/2;
-        let clickY = playbuttonPosition.y - rectangleHeight/2;
-        if((mouseX > clickX) && (mouseX < clickX + rectangleWidth) && (mouseY > clickY) && (mouseY < clickY + rectangleHeight)){
-            buttonPressed();
-            buttonState = true;
-            playButtonColour = playOnColour;
+    if(welcome === 2){
+        if(interfaceState === 1){
+            // let d = dist(mouseX, mouseY, playbuttonPosition.x, playbuttonPosition.y);
+            // if (d < radius/2) {
+            let clickX = playbuttonPosition.x - rectangleWidth/2;
+            let clickY = playbuttonPosition.y - rectangleHeight/2;
+            if((mouseX > clickX) && (mouseX < clickX + rectangleWidth) && (mouseY > clickY) && (mouseY < clickY + rectangleHeight)){
+                buttonPressed();
+                buttonState = true;
+                playButtonColour = playOnColour;
+            }
+        }else if(interfaceState === 2){
+            // let d = dist(mouseX, mouseY, playbuttonPosition.x, playbuttonPosition.y);
+            // if (d < radius/2) {
+            let clickX = playbuttonPosition.x - rectangleWidth/2;
+            let clickY = playbuttonPosition.y - rectangleHeight/2;
+            if((mouseX > clickX) && (mouseX < clickX + rectangleWidth) && (mouseY > clickY) && (mouseY < clickY + rectangleHeight)){
+                buttonPressed();
+                buttonState = true;
+                playButtonColour = playOffColour;
+            }
+        }else if(interfaceState === 3){
+                console.log("network click");
+                interfaceState = 0;
+                assignSoundToPlayer();
         }
-    }else if(interfaceState === 2){
-        // let d = dist(mouseX, mouseY, playbuttonPosition.x, playbuttonPosition.y);
-        // if (d < radius/2) {
-        let clickX = playbuttonPosition.x - rectangleWidth/2;
-        let clickY = playbuttonPosition.y - rectangleHeight/2;
-        if((mouseX > clickX) && (mouseX < clickX + rectangleWidth) && (mouseY > clickY) && (mouseY < clickY + rectangleHeight)){
-            buttonPressed();
-            buttonState = true;
-            playButtonColour = playOffColour;
+        if((mouseX > width/5) && (mouseX < width/5*4) && (mouseY > height/20*18.6) && (mouseY < height)){
+            window.location.href = "/connectivity/index.html";
         }
-    }else if(interfaceState === 3){
-            console.log("network click");
-            interfaceState = 0;
-            assignSoundToPlayer();
-    }
-    if((mouseX > width/5) && (mouseX < width/5*4) && (mouseY > height/20*18.6) && (mouseY < height)){
-        window.location.href = "/connectivity/index.html";
+    }else{
+        welcome = welcome +1;
     }
 }
 

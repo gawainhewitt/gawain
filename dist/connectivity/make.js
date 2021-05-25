@@ -112,6 +112,8 @@ let saveText;
 
 let inp;
 
+let welcome = 0;
+
 function preload() {
   carpet = loadImage(`/connectivity/images/background.png`);
   seqOn = loadImage(`/connectivity/images/chairYellow.png`);
@@ -235,7 +237,12 @@ function welcomeScreen() {
   background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
   textSize(cnvDimension/20);
   textAlign(CENTER, CENTER);
-  text("Touch or click mouse to start. Click on faces or chairs to make your own music. Click Save to share your work", width/10, height/10, (width/10) * 8, (height/10) * 8);
+  if(welcome ===0){
+    text("In this installation you can use loops and excerpts from music made on learning and outreach projects run by Wigmore Hall to make your own musical pieces. The faces used in the piece were drawn by children from our partner schools.", width/10, height/10, (width/10) * 8, (height/10) * 8);
+  }else{
+    text("Touch or click mouse to start. Click on faces or chairs to make your own music. Click Save to share your work. Click the back button on your browser to return to the Box Office", width/10, height/10, (width/10) * 8, (height/10) * 8);
+  }
+    welcome = welcome + 1;
 }
 
 function createButtonPositions() {
@@ -571,6 +578,8 @@ function handleClick(e){
         }, 1000);
       }
     }
+  }else if(welcome === 1){
+    welcomeScreen();
   }else{
     startAudio();
   }
