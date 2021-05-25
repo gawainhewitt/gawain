@@ -86,18 +86,18 @@ function handleClick() {
     //performance
     if((mouseX > perfX) && (mouseX < perfX + perfWidth) && (mouseY > perfY) && (mouseY < perfY + perfHeight)){
         console.log("click");
-        window.location.href = "/connectivity/performance.html";
         performances = performancesOn;
+        window.location.href = "/connectivity/performance.html";
     }
     if((mouseX > convX) && (mouseX < convX + convWidth) && (mouseY > convY) && (mouseY < convY + convHeight)){
         console.log("click");
-        window.location.href = "/connectivity/conversations.html";
         conversations = conversationsOn;
+        window.location.href = "/connectivity/conversations.html";
     }
     if((mouseX > makeX) && (mouseX < makeX + makeWidth) && (mouseY > makeY) && (mouseY < makeY + makeHeight)){
         console.log("click");
-        window.location.href = "/connectivity/make.html";
         make = makeOn;
+        window.location.href = "/connectivity/make.html";
     }
     return false;
 }
