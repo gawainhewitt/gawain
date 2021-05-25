@@ -6,10 +6,6 @@ let yPercent;
 
 function preload(){
     boxOfficeImage = loadImage("/connectivity/images/HomePageMain.png");
-    performancesOn = loadImage("/connectivity/images/performances_invert.png");
-    conversationsOn = loadImage("/connectivity/images/conversations_invert.png");
-    makeOn = loadImage("/connectivity/images/makemusic_invert.png");
-    infoOn = loadImage("/connectivity/images/info_invert.png");
     performancesOff = loadImage("/connectivity/images/performances.png");
     conversationsOff = loadImage("/connectivity/images/conversations.png");
     makeOff = loadImage("/connectivity/images/makemusic.png");
@@ -37,9 +33,14 @@ function setup() {  // setup p5
     // *** add vanilla JS event listeners for touch which i want to use in place of the p5 ones as I believe that they are significantly faster
     let el = document.getElementById("p5parent");
     el.addEventListener("click", handleClick);
+
+    performancesOn = loadImage("/connectivity/images/performances_invert.png");
+    conversationsOn = loadImage("/connectivity/images/conversations_invert.png");
+    makeOn = loadImage("/connectivity/images/makemusic_invert.png");
+    infoOn = loadImage("/connectivity/images/info_invert.png");
 }
 
-let perfX, perfY, perfWidth, perfHeight, convX, convY, convWidth, convHeight, makeX, makeY, makeWidth, MakeHeight, infoX, infoY, infoWidth, infoHeight; //do this for all the options then use the variables for both mouseOver, dimensions and click
+let perfX, perfY, perfWidth, perfHeight, convX, convY, convWidth, convHeight, makeX, makeY, makeWidth, makeHeight, infoX, infoY, infoWidth, infoHeight; //do this for all the options then use the variables for both mouseOver, dimensions and click
 
 function draw() {
     xPercent = width/100;
@@ -56,22 +57,16 @@ function draw() {
     makeX = xPercent*74.94;
     makeY = yPercent*19.83;
     makeWidth = xPercent*14.9;
-    MakeHeight = yPercent*21.7;
+    makeHeight = yPercent*21.7;
     infoX = xPercent*10.43;
     infoY = yPercent*74.08;
     infoWidth = xPercent*15.66;
     infoHeight = yPercent*18.01;
 
-    if((mouseX > perfX) && (mouseX < perfX + perfWidth) && (mouseY > perfY) && (mouseY < perfY + perfHeight)){
-        performances = performancesOn;
-    }else{
-        performances = performancesOff;
-    }
-
     imageMode(CORNER);
     image(performances, perfX, perfY, perfWidth, perfHeight);
     image(conversations, convX, convY, convWidth, convHeight);
-    image(make, makeX, makeY, makeWidth, MakeHeight);
+    image(make, makeX, makeY, makeWidth, makeHeight);
     image(info, infoX, infoY, infoWidth, infoHeight);
     image(boxOfficeImage, 0, 0, width, height);
 
@@ -92,5 +87,17 @@ function handleClick() {
     if((mouseX > perfX) && (mouseX < perfX + perfWidth) && (mouseY > perfY) && (mouseY < perfY + perfHeight)){
         console.log("click");
         window.location.href = "/connectivity/performance.html";
+        performances = performancesOn;
     }
+    if((mouseX > convX) && (mouseX < convX + convWidth) && (mouseY > convY) && (mouseY < convY + convHeight)){
+        console.log("click");
+        window.location.href = "/connectivity/conversations.html";
+        conversations = conversationsOn;
+    }
+    if((mouseX > makeX) && (mouseX < makeX + makeWidth) && (mouseY > makeY) && (mouseY < makeY + makeHeight)){
+        console.log("click");
+        window.location.href = "/connectivity/make.html";
+        make = makeOn;
+    }
+    return false;
 }
