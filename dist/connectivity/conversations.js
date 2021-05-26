@@ -133,7 +133,7 @@ function draw() {
         background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
         textSize(cnvDimension/30);
         textAlign(CENTER, CENTER);
-        text("Gawain Hewitt and Troupe asked the public to respond to a series of questions about music within the context of the pandemic of 2020/21. In this installation you can hear the responses.", width/10, height/10, (width/10) * 8, (height/10) * 8);
+        text("Gawain Hewitt and TROUPE asked the public to respond to a series of questions about music within the context of the pandemic of 2020/21. In this installation you can hear the responses.", width/10, height/10, (width/10) * 8, (height/10) * 8);
     }else if(welcome === 1){
         background(150); // background is grey (remember 5 is maximum because of the setup of colorMode)
         textSize(cnvDimension/30);

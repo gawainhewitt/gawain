@@ -40,6 +40,9 @@ function setup() {  // setup p5
     infoOn = loadImage("/connectivity/images/info_invert.png");
     dimensions();
     refreshPage();
+    boxOfficeImage = loadImage("/connectivity/images/HomePageMain.png", () => {
+        refreshPage()
+    });
 }
 
 let perfX, perfY, perfWidth, perfHeight, convX, convY, convWidth, convHeight, makeX, makeY, makeWidth, makeHeight, infoX, infoY, infoWidth, infoHeight; //do this for all the options then use the variables for both mouseOver, dimensions and click
@@ -52,7 +55,6 @@ function refreshPage() {
     image(make, makeX, makeY, makeWidth, makeHeight);
     image(info, infoX, infoY, infoWidth, infoHeight);
     image(boxOfficeImage, 0, 0, width, height);
-
 }
 
 function windowResized() {
