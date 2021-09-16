@@ -26,7 +26,7 @@ var cnvDimension;
 var bufferToPlay = buffer1;
 var lastBuffer;
 var currentBuffer;
-var numberOfSamples = 42;
+var numberOfSamples =8;
 let visualisationSize;
 let welcome = 0;
 
@@ -206,7 +206,7 @@ function chooseSample(){
 
     usedSounds.push(whichSound);
     console.log(`whichSound = ${whichSound}`);
-    theSample = `speech${whichSound}.mp3`;
+    theSample = `speech${whichSound}.flac`;
     console.log(`theSample = ${theSample}`);
     console.log(`usedSounds = ${usedSounds}`);
 
